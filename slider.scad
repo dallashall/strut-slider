@@ -1,23 +1,3 @@
-include<bearing.scad>
-
-module bearings(railTineHeight = 7, bearingDiam = 22, bearingHeight = 8, bearingShaftSize = 8){
-  translate([0, bearingDiam / 2 + railTineHeight / 2, bearingDiam]){
-    rotate([0, 90, 0]){
-      bearing(bearingShaftSize, bearingDiam, bearingHeight);
-    }
-  }
-  translate([0, bearingDiam / 2 + railTineHeight / 2, -bearingDiam]){
-    rotate([0, 90, 0]){
-      bearing(bearingShaftSize, bearingDiam, bearingHeight);
-    }
-  }
-  translate([0, -bearingHeight - railTineHeight, 0]){
-    rotate([0, 90, 0]){
-      bearing(bearingShaftSize, bearingDiam, bearingHeight);
-    }
-  }
-}
-
 module boltHoles(railGapW = 21.25, bearingDiam = 22, bearingShaftSize = 8){
   translate([0, 0, -(bearingDiam / 2 + bearingShaftSize / 2)]){
     rotate([0, 90, 0]){
@@ -117,5 +97,7 @@ module slider(railGapW = 21.25, railTineHeight = 7, bearingDiam = 22, bearingHei
       }
     }
   }
+
+
 }
 slider();
