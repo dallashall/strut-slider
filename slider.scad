@@ -1,7 +1,15 @@
+use<m5.scad>
 module boltHoles(railGapW = 21.25, bearingDiam = 22, bearingShaftSize = 8){
-  translate([0, 0, -(bearingDiam / 2 + bearingShaftSize / 2)]){
+  translate([2, 0, -(bearingDiam / 2 + bearingShaftSize / 2)]){
     rotate([0, 90, 0]){
-      cylinder(r = bearingShaftSize / 2, h = railGapW + 2, center = true);
+      m5NutInsert();
+      // cylinder(r = bearingShaftSize / 2, h = railGapW + 2, center = true);
+    }
+  }
+  translate([-2, 0, -(bearingDiam / 2 + bearingShaftSize / 2)]){
+    rotate([180, 90, 0]){
+      m5NutInsert();
+      // cylinder(r = bearingShaftSize / 2, h = railGapW + 2, center = true);
     }
   }
   translate([0, bearingDiam, (bearingDiam / 2 + bearingShaftSize / 2)]){
@@ -21,17 +29,17 @@ module bearingSupports(railGapW = 21.25, bearingDiam = 22, bearingShaftSize = 8)
     translate([0, 0, 0]){
       translate([0, 0, -(bearingDiam / 2 + bearingShaftSize / 2)]){
         rotate([0, 90, 0]){
-          cylinder(r = bearingShaftSize / 2 + 2, h = railGapW + 1, center = true);
+          cylinder(r = bearingShaftSize / 2 + 2, h = railGapW, center = true);
         }
       }
       translate([0, bearingDiam, (bearingDiam / 2 + bearingShaftSize / 2)]){
         rotate([0, 90, 0]){
-          cylinder(r = bearingShaftSize / 2 + 2, h = railGapW + 1, center = true);
+          cylinder(r = bearingShaftSize / 2 + 2, h = railGapW, center = true);
         }
       }
       translate([0, -bearingDiam, (bearingDiam / 2 + bearingShaftSize / 2)]){
         rotate([0, 90, 0]){
-          cylinder(r = bearingShaftSize / 2 + 2, h = railGapW + 1, center = true);
+          cylinder(r = bearingShaftSize / 2 + 2, h = railGapW, center = true);
         }
       }
     }
@@ -76,20 +84,18 @@ module slider(railGapW = 21.25, railTineHeight = 7, bearingDiam = 22, bearingHei
       union(){
         difference(){
           rotate([90, 0, 0]){
-            cube(size = [railGapW, railTineHeight + bearingDiam * 2, bearingDiam * 3], center = true);
+            cube(size = [railGapW - 2, railTineHeight + bearingDiam * 2 + 4, bearingDiam * 3.5], center = true);
           }
-
           boltHoles(railGapW, bearingDiam, bearingShaftSize);
         }
-
-        bearingSupports();
+        bearingSupports(railGapW - 2);
       }
 
       translate([0, 0, 0]){
-        translate([0, 2 * bearingDiam - 1, 0.75 * bearingDiam]){
+        translate([0, 2 * bearingDiam + 4, 0.75 * bearingDiam]){
           sliderBracket();
         }
-        translate([0, -2 * bearingDiam + 1, 0.75 * bearingDiam]){
+        translate([0, -2 * bearingDiam - 4, 0.75 * bearingDiam]){
           rotate([0, 0, 180]){
             sliderBracket();
           }
