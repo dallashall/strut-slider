@@ -84,7 +84,7 @@ module slider(railGapW = 21.25, railTineHeight = 7, bearingDiam = 22, bearingHei
       union(){
         difference(){
           rotate([90, 0, 0]){
-            cube(size = [railGapW - 2, railTineHeight + bearingDiam * 2 + 4, bearingDiam * 3.5], center = true);
+            cube(size = [railGapW - 4, railTineHeight + bearingDiam * 2 + 4, bearingDiam * 3.5], center = true);
           }
           boltHoles(railGapW, bearingDiam, bearingShaftSize);
         }
@@ -92,10 +92,10 @@ module slider(railGapW = 21.25, railTineHeight = 7, bearingDiam = 22, bearingHei
       }
 
       translate([0, 0, 0]){
-        translate([0, 2 * bearingDiam + 4, 0.75 * bearingDiam]){
+        translate([0, 2 * bearingDiam + 5.5, 0.75 * bearingDiam]){
           sliderBracket();
         }
-        translate([0, -2 * bearingDiam - 4, 0.75 * bearingDiam]){
+        translate([0, -2 * bearingDiam - 5.5, 0.75 * bearingDiam]){
           rotate([0, 0, 180]){
             sliderBracket();
           }
@@ -103,7 +103,46 @@ module slider(railGapW = 21.25, railTineHeight = 7, bearingDiam = 22, bearingHei
       }
     }
   }
-
-
 }
-slider();
+
+module sliderSplit(railGapW = 21.25, railTineHeight = 7, bearingDiam = 22, bearingHeight = 8, bearingShaftSize = 8) {
+  $fn=50;
+  difference() {
+    slider(railGapW = 21.25, railTineHeight = 7, bearingDiam = 22, bearingHeight = 8, bearingShaftSize = 8);
+    translate([0, 0, -bearingHeight + 1]) {
+      cube(size=[railGapW, bearingDiam * 4, 3], center=true);
+    }
+
+    // height adjustment +y side
+    translate([0, bearingDiam + bearingShaftSize + 4, 0]) {
+      difference() {
+        union() {
+          cylinder(d=10, h=bearingDiam * 2, center=false);
+          cylinder(d=5, h=bearingDiam * 3, center=true);
+        }
+      }
+    }
+    translate([0, bearingDiam + bearingShaftSize + 4, -14]) {
+      rotate([180, 0, 90]) {
+        m5NutInsert();
+      }
+    }
+
+    // height adjustment -y side
+    translate([0, -bearingDiam - bearingShaftSize - 4, 0]) {
+      difference() {
+        union() {
+          cylinder(d=10, h=bearingDiam * 2, center=false);
+          cylinder(d=5, h=bearingDiam * 3, center=true);
+        }
+      }
+    }
+    translate([0, -bearingDiam - bearingShaftSize - 4, -14]) {
+      rotate([180, 0, -90]) {
+        m5NutInsert();
+      }
+    }
+  }
+}
+
+sliderSplit();

@@ -1,11 +1,11 @@
 module boltHead(){
   $fn = 30;
-  cylinder(r1 = 4.4, r2 = 2, h = 4, center = false);
+  cylinder(r1 = 4.9, r2 = 2.5, h = 3.2, center = false);
 }
 
 module m5Bolt(length = 20){
-  translate([0, 0, 4]){
-    cylinder(r = 2, h = length, center = false, $fn = 30);
+  translate([0, 0, 3.2]){
+    cylinder(r = 2.5, h = length, center = false, $fn = 30);
   }
   boltHead();
 }
@@ -37,6 +37,6 @@ module m5NutInsert(depth = 30){
     }
 }
 
-// m5Bolt();
-m5Nut();
-m5NutInsert();
+m5Bolt();
+// m5Nut();
+// m5NutInsert();
